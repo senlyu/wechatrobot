@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[24]:
+
 
 import itchat
 import smtplib
@@ -10,24 +10,18 @@ from email.mime.text import MIMEText
 from itchat.content import TEXT
 
 
-# In[ ]:
-
-
-
-
-# In[2]:
 
 # login
 #itchat.auto_login(enableCmdQR=2)
 
 
-# In[3]:
+
 
 # listen to the message and send back
 #send_msg(msg='Text Message', toUserName=None)
 
 
-# In[25]:
+
 
 with open('email_list.pickle', 'rb') as f:
     # The protocol version used is detected automatically, so we do not
@@ -36,7 +30,7 @@ with open('email_list.pickle', 'rb') as f:
     email_list = data['email_list']
 
 
-# In[40]:
+
 
 # function: send email
 def send_email(email_type,email_content):
@@ -61,7 +55,7 @@ def send_email(email_type,email_content):
     server.quit()
 
 
-# In[27]:
+
 
 def add_email(new_email):
     # An arbitrary collection of objects supported by pickle.
@@ -75,7 +69,7 @@ def add_email(new_email):
         pickle.dump(data, f)
 
 
-# In[28]:
+
 
 def delete_email(new_email):
     email_list.remove(new_email)
@@ -88,7 +82,7 @@ def delete_email(new_email):
         pickle.dump(data, f)
 
 
-# In[29]:
+
 
 def show_email():
     result = ''
@@ -97,44 +91,23 @@ def show_email():
     return result
 
 
-# In[53]:
+
 
 #test email add
 #add_email('jobs@senlyu.com')
 
 
-# In[33]:
+
 
 #test email delete
 #delete_email('')
 
 
-# In[36]:
 
 #show_email()
 
 
-# In[37]:
 
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
 
 
 @itchat.msg_register(TEXT, isGroupChat=True)
@@ -170,6 +143,8 @@ def print_content(msg):
         email_type = '经验'
         email_content = msg['Text']
         send_email(email_type,email_content)
+    if (msg['Text'][:3] == '#版本'):
+        itchat.send(msg='测试版0718，更换了邮箱服务器。带来不便深表歉意。', toUserName=msg['FromUserName'])
     if (flag):
         email_content = msg['Text']
         send_email(email_type,email_content)
@@ -178,52 +153,4 @@ def print_content(msg):
 
 itchat.auto_login(hotReload=True)
 itchat.run()
-
-
-# In[12]:
-
-
-
-
-# In[23]:
-
-
-
-
-# In[13]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-
-
-
-# In[ ]:
-
-
 
